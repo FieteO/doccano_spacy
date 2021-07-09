@@ -1,0 +1,4 @@
+__pycache__
+model-*/**
+data
+train.spacy

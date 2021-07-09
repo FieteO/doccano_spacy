@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+    doccano-dc:
+        image: doccano/doccano
+        container_name: doccano-dc
+        environment:
+            ADMIN_USERNAME: "admin"
+            ADMIN_PASSWORD: "password"
+            ADMIN_EMAIL: "admin@example.com"
+        ports:
+            - 8000:8000
+
+    spacy-server:
+        build: ./spacy-server
+        container_name: spacy-server
+        # https://docs.docker.com/compose/compose-file/compose-file-v3/#short-syntax-3
+        volumes:
+            - custom-model/model-best:/model
+        ports:
+            - 8080:8080
+        depends_on:
+            - doccano-dc
+
+    # spacy-server:
+    #     image: neelkamath/spacy-server:2-en_core_web_sm-sense2vec
+    #     container_name: spacy-server
+    #     ports:
+    #         - 8080:8000
+    #     depends_on:
+    #         - doccano-dc
+
+    # https://stackoverflow.com/questions/32614199/replace-request-body-in-nginx-proxy-for-post#51139521
+    # nginx-proxy:
+    #     image: nginx
+    #     volumes:
+    #         - ./nginx-proxy/rewrite.conf:/etc/nginx/sites-enabled/rewrite.conf
+    #     container_name: nginx
+        
