@@ -6,7 +6,7 @@ from spacy.tokens import DocBin
 
 nlp = spacy.load('en_core_web_md') # load a new spacy model
 
-def generate_training_file(training_data):
+def generate_training_file(training_data, outfile):
     """ Generate a spacy training file that is used when invoking `spacy train` """
     db = DocBin() # create a DocBin object
     for text, annot in tqdm(training_data): # data in previous format
@@ -21,8 +21,10 @@ def generate_training_file(training_data):
         doc.ents = ents # label the text with the ents
         db.add(doc)
 
-    db.to_disk("./custom-model/train.spacy") # save the docbin object
+    db.to_disk(outfile) # save the docbin object
+    print(f'Successfully wrote \'{outfile}\' to disk')
 
 filepath = 'data/exported/admin.jsonl'
+outfile = "./custom-model/train.spacy"
 data = jsonl_to_list(filepath)
-generate_training_file(data)
+generate_training_file(data, outfile)

@@ -2,11 +2,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import spacy
 import json
+from os import listdir
 
 # https://github.com/doccano/doccano/issues/1417#issuecomment-866685966
 
+model = '/model'
+if not listdir(model):
+    model = 'en_core_web_md'
+
 # nlp = spacy.load("/model")
-nlp = spacy.load('en_core_web_md')
+nlp = spacy.load(model)
 
 class TextToAnnotate(BaseModel):
     text: str

@@ -1,6 +1,6 @@
-# https://linuxize.com/post/bash-check-if-file-exists/#check-if-directory-exist
-DIR=/model/abc
-if [ ! -d "$DIR" ]; then
+# https://linuxize.com/post/bash-check-if-file-exists/#check-if-file-does-not-exist
+FILE=/model/meta.json
+if [ ! -f "$FILE" ]; then
     echo "Custom spacy model not provided, downloading official one..."
     python -m spacy download en_core_web_md
     echo "Download complete"
