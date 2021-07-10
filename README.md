@@ -19,7 +19,7 @@
       - [Set mappings](#set-mappings)
 
 ``` bash
-fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2
+fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2 --dirsfirst
 .
 ├── custom-model                # contains the spacy model (training) files
 │   ├── model-best              # trained model (best)
@@ -31,11 +31,11 @@ fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2
 │   ├── exported
 │   ├── captum.csv
 │   ├── captum.txt
-│   └── doccano_export.zip
+│   └── label_config.json
 ├── spacy-server                # spacy backend server
 │   ├── app
-│   ├── model-best
-│   └── Dockerfile
+│   ├── Dockerfile
+│   └── run.sh
 ├── convert.py                  # convert reports csv to doccano format
 ├── docker-compose.yaml
 ├── exporter.py                 # contains helper functions
