@@ -2,12 +2,8 @@
 
 - [Doccano annotation server with spacy backend](#doccano-annotation-server-with-spacy-backend)
   - [Getting started](#getting-started)
-    - [Training a custom model](#training-a-custom-model)
-      - [Export the dataset](#export-the-dataset)
-      - [Create a `.spacy` training file](#create-a-spacy-training-file)
-      - [Run the training](#run-the-training)
-      - [Rebuild the image](#rebuild-the-image)
     - [Spinning up the server](#spinning-up-the-server)
+    - [Get data file that can be imported into doccano](#get-data-file-that-can-be-imported-into-doccano)
   - [Configure Doccano](#configure-doccano)
     - [Create a project](#create-a-project)
     - [Import Dataset](#import-dataset)
@@ -17,6 +13,11 @@
       - [Set parameters](#set-parameters)
       - [Set a template](#set-a-template)
       - [Set mappings](#set-mappings)
+  - [Training a custom model](#training-a-custom-model)
+    - [Export the dataset](#export-the-dataset)
+    - [Create a `.spacy` training file](#create-a-spacy-training-file)
+    - [Run the training](#run-the-training)
+    - [Rebuild the image](#rebuild-the-image)
 
 ``` bash
 fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2 --dirsfirst
@@ -46,47 +47,30 @@ fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2 --dirsfirst
 ```
 
 ## Getting started
-In order to start annotating, convert the csv file into the format doccano requires for imports.
-``` bash
-python convert.py
-```
-Note that this requires the spacy `en_core_web_md` model, which can be obtained by running `python -m spacy download en_core_web_md`.
-
-### Training a custom model
-#### Export the dataset
-In Doccano, go to the Datasets page and export the dataset. This will create a zip file containing the annotations per user, i.e `admin.jsonl` and `unknown.jsonl` which contains all the sections that have not been annotated yet.
-
-In the `data` folder, create an `exported` folder and copy over the `admin.jsonl` file.
-
-#### Create a `.spacy` training file
-The training file is used by spacy in the `spacy train` command. Run the `generate_train_file.py` script, to generate the file based on the `admin.jsonl`.
-``` bash
-python generate_train_file.py
-```
-
-#### Run the training
-``` bash
-python -m spacy train custom-model/config.cfg --output ./custom-model --paths.train ./custom-model/train.spacy --paths.dev ./custom-model/train.spacy
-```
-If everything was successfull, you should now have a `model-best` and `model-last` folder in the `custom-model` directory.
-
-#### Rebuild the image
-If the containers are still running, use `docker-compose stop` to stop them. Now we can recreate them with `docker-compose up --build`.
 
 ### Spinning up the server
 ``` bash
 docker-compose up -d
 ```
+Doccano should now be available on http://localhost:8000 in your browser (Credentials: admin, password)
+
 Shut down:
 ``` bash
 docker-compose stop
 ```
+### Get data file that can be imported into doccano
+In order to start annotating, convert your csv file (in my case `data/captum.csv`) into the format doccano requires for imports.
+``` bash
+python convert.py
+```
+Note that this requires the spacy `en_core_web_md` model, which can be obtained by running `python -m spacy download en_core_web_md`.
 
 ## Configure Doccano
+Open the web UI at http://localhost:8000.
 ### Create a project
 ![create project](docs/doccano_create_project.png)
 ### Import Dataset
-Files you import must have a specific format. You may use the `convert.py` to convert from a pandas column to a `textline` file.
+Files you import must have a specific format. You may use the `convert.py` to convert from a pandas dataframe to a `textline` file.
 ![Import](docs/doccano_import_dataset.png)
 ### Create Labels
 You can create labels in the labels section (sidemenu). Labels can also be im- and exported (see the `data/label_config.json`).
@@ -111,3 +95,24 @@ Here we can customize the mapping between the response we get from the annotatio
 #### Set mappings
 Finally we have to provide the mapping between the labels returned by the spacy backend and the ones present in doccano. It looks like we have to provide this even in the case that they are identical.
 ![mappings](docs/doccano_automl_setmappings.png)
+
+## Training a custom model
+### Export the dataset
+In Doccano, go to the Datasets page and export the dataset. This will create a zip file containing the annotations per user, i.e `admin.jsonl` and `unknown.jsonl` which contains all the sections that have not been annotated yet.
+
+In the `data` folder, create an `exported` folder and copy over the `admin.jsonl` file.
+
+### Create a `.spacy` training file
+The training file is used by spacy in the `spacy train` command. Run the `generate_train_file.py` script, to generate the file based on the `admin.jsonl`.
+``` bash
+python generate_train_file.py
+```
+
+### Run the training
+``` bash
+python -m spacy train custom-model/config.cfg --output ./custom-model --paths.train ./custom-model/train.spacy --paths.dev ./custom-model/train.spacy
+```
+If everything was successfull, you should now have a `model-best` and `model-last` folder in the `custom-model` directory.
+
+### Rebuild the image
+If the containers are still running, use `docker-compose stop` to stop them. Now we can recreate them with `docker-compose up --build`.
