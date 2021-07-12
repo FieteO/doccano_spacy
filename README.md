@@ -115,4 +115,7 @@ python -m spacy train custom-model/config.cfg --output ./custom-model --paths.tr
 If everything was successfull, you should now have a `model-best` and `model-last` folder in the `custom-model` directory.
 
 ### Rebuild the image
-If the containers are still running, use `docker-compose stop` to stop them. Now we can recreate them with `docker-compose up --build`.
+If the containers are still running, use `docker-compose stop` to stop them. Now we can recreate them with:
+``` bash
+docker-compose up --build
+```
