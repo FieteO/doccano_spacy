@@ -122,6 +122,10 @@ python generate_train_file.py
 ``` bash
 python -m spacy train custom-model/config.cfg --output ./custom-model --paths.train ./custom-model/train.spacy --paths.dev ./custom-model/train.spacy
 ```
+SciSpacy
+``` bash
+python -m spacy train custom-model/scispacy/config.cfg --output ./custom-model/scispacy/ --paths.train ./custom-model/train.spacy --paths.dev ./custom-model/train.spacy
+```
 If everything was successfull, you should now have a `model-best` and `model-last` folder in the `custom-model` directory.
 
 ### Rebuild the image
