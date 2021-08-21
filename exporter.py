@@ -1,12 +1,13 @@
 # https://stackoverflow.com/questions/57902256/how-to-export-document-with-entities-from-spacy-for-use-in-doccano#58524417
 import spacy
-nlp = spacy.load('en_core_web_md')
+
 
 def text_to_jsonl(text):
     """
     :text (str): source text
     Returns (list (dict)): deccano format json
     """
+    nlp = spacy.load('en_core_web_md')
     djson = list()
     doc = nlp(text)
     for sent in doc.sents:
@@ -17,6 +18,7 @@ def text_to_jsonl(text):
     return djson
 
 def text_to_textline(text):
+    nlp = spacy.load('en_core_web_md')
     textline = list()
     doc = nlp(text)
     for sent in doc.sents:
