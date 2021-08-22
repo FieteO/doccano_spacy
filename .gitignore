@@ -1,4 +1,6 @@
 __pycache__
 model-*
 data
-train.spacy
+*.spacy
+.env
+.vscode

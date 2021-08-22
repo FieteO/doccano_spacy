@@ -120,7 +120,7 @@ python generate_train_file.py
 
 ### Run the training
 ``` bash
-python -m spacy train custom-model/config.cfg --output ./custom-model --paths.train ./custom-model/train.spacy --paths.dev ./custom-model/train.spacy
+python -m spacy train custom-model/config.cfg --output ./custom-model
 ```
 SciSpacy
 ``` bash

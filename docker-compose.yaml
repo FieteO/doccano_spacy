@@ -13,6 +13,9 @@ services:
     spacy-server:
         build: ./spacy-server
         container_name: spacy-server
+        environment:
+            SPACY_USER: ${SPACY_USER}
+            SPACY_PASSWORD: ${SPACY_PASSWORD}
         # https://docs.docker.com/compose/compose-file/compose-file-v3/#short-syntax-3
         volumes:
             - ./custom-model/model-best:/model
