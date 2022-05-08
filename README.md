@@ -105,7 +105,7 @@ pip install -r requirements
 ```
 Download the spacy model
 ``` bash
-python -m spacy download en_core_web_sm
+python -m spacy download en_core_web_md
 ```
 ### Export the dataset
 In Doccano, go to the Datasets page and export the dataset. This will create a zip file containing the annotations per user, i.e `admin.jsonl` and `unknown.jsonl` which contains all the sections that have not been annotated yet.
