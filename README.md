@@ -50,6 +50,13 @@ fiete@ubu:~/Documents/programming/spacy/doccano_spacy$ tree -L 2 --dirsfirst
 ## Getting started
 
 ### Spinning up the server
+For proper authentication, you'll need to create a `.env` file with the following content in the root of this project:
+```
+SPACY_USER=admin
+SPACY_PASSWORD=password
+```
+You can change the credentials to your liking, but make sure to also adjust the `Authorization` headers, as described in the [Server README](spacy-server/README.md) and the [Set parameters](#set-parameters) step below.
+
 ``` bash
 docker-compose up -d
 ```
@@ -84,7 +91,7 @@ Important: Make sure you have created your custom labels before setting this up!
 Navigate to Settings and select the Auto Labeling tab. Hit `Create` and select `Custom REST template`.
 
 #### Set parameters
-In the next step, we are specifying the request properties.
+In the next step, we are specifying the request properties. This includes setting the `Content-Type` and `Authorization` headers and the request `Body`. For details on how to obtain the correct `Authorization` Header, also check the [Server README](spacy-server/README.md).
 ![Step 2: Set params, set request properties](docs/doccano_automl_setparams_one.png)
 If all is configured correctly, the test should return a valid response.
 ![Step 2: Set params, test the configuration](docs/doccano_automl_setparams_two.png)

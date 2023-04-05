@@ -6,8 +6,12 @@ wget -O en_core_sci_md 'https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/relea
 ```
 
 # Test authentication
+The server api is using Basic Authentication such that it could also run in some publically accessible cloud environment.
+
+Make sure to adjust the `-u admin:password` to the credentials that you have specified in the `.env` file.
 ``` bash
 curl -X POST -F 'foo=bar' -u 'admin:password' http://localhost:8080/auto_annotate
+{"detail":[{"loc":["body"],"msg":"value is not a valid dict","type":"type_error.dict"}]}
 ```
 ## Using Header
 Get the Base64 encoded credentials:
